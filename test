@@ -1,0 +1,80 @@
+local m = function(str)
+	local HttpService = game:GetService("HttpService")
+	local BadWords = {
+		["Inappropriate"] = {
+			"vagina",
+			"sex",
+			"porn",
+			"xxx",
+			"ass",
+			"penis",
+			"dick",
+			"cock",
+			"vajina",
+			"blowjob",
+			"bollocks",
+			"blow job",
+			"tits",
+			"boobs",
+			"breast",
+			"boner",
+			"bullshit",
+			"butt",
+			"cunt",
+			"cunnie",
+			"cum",
+			"russians",
+			"69",
+			"sixty nine",
+		},
+		["Swearing"] = {
+			"badass",
+			"dumbass",
+			"bitch",
+			"slut",
+			"nigga",
+			"nigger",
+			"bast",
+			"bullshit",
+			"fuck",
+			"beaner",
+			"chode",
+		},
+		["Other"] = {
+			"russians",
+			"russia",
+			"corona",
+			"covid",
+			"19",
+			"bbc",
+			"give me head",
+			"gimmie head",
+			"suck my",
+			"lollipop",
+		}
+	}
+	local ch = function(va)
+		va = tostring(va)
+		return "[ Click To View : \"".. va .."\" ]"
+	end
+	local Data = {
+		["censored"] = false,
+		["wordthatgotcensored"] = nil,
+		["sentence"] = str,
+		["messagecensored"] = nil,
+	}
+	for index, value in pairs(BadWords) do
+		for i,x in pairs(value) do
+			local Lower = string.lower(str)
+			local Low = string.lower(x)
+			if Lower:find(Low) then
+				Data["censored"] = index
+				Data["wordthatgotcensored"] = x
+				Data["messagecensored"] = ch(index)
+				break
+			end
+		end
+	end
+	return HttpService:JSONEncode(Data)
+end
+return m
